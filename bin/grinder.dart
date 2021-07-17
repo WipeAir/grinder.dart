@@ -17,10 +17,11 @@ void main(List<String> args) {
   }
 
   final newArgs = <String>[script, ...args];
-  Process.start(Platform.resolvedExecutable, newArgs).then((Process process) {
-    stdout.addStream(process.stdout);
-    stderr.addStream(process.stderr);
-    process.stdin.addStream(stdin);
+  Process.start(
+    Platform.resolvedExecutable,
+    newArgs,
+    mode: ProcessStartMode.inheritStdio,
+  ).then((Process process) {
     return process.exitCode.then((int code) => exit(code));
   });
 }
